@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import TodoCard from "./TodoCard";
 import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       isClicked: true,
@@ -29,6 +30,14 @@ class App extends Component {
     this.setState({inputValue: ''})
   }
 
+  handleDelete = (index) => {
+    // console.log('was clicked...', index)
+    let newList = this.state.listOfTodo;
+    newList.splice(index, 1);
+    this.setState({listOfTodo: [...newList]})
+
+  }
+
   render() {
     return (
       <div className="App">
@@ -42,7 +51,7 @@ class App extends Component {
           {/* <p> {this.state.isClicked ? 'true' : 'false'} </p> */}
           <ol> 
             {this.state.listOfTodo.map((todo, index) => {
-              return <li key={index}>{todo}</li>
+              return <TodoCard key={index} index={index} title={todo} clickToDelete={this.handleDelete}/>
             })}
           </ol>
           <a
@@ -51,7 +60,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            {this.props.name}
           </a>
         </header>
       </div>
